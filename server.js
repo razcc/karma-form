@@ -22,18 +22,23 @@ app.post("/", (req, res) => {
   var email = req.body.emailValue
   var message = req.body.message
 
+  const smtpHost = process.env.SMTP_HOST
+  const smtpPort = process.env.SMTP_PORT
+  const smtpUser = process.env.SMTP_USER
+  const smtpPass = process.env.SMTP_PASS
+
   var transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: process.env.SMTP_PORT,
+    host: smtpHost,
+    port: smtpPort,
     auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS,
+      user: smtpUser,
+      pass: smtpPass,
     },
   })
 
   var mailOptions = {
     from: email,
-    to: "rafael.leonardi98@gmail.com",
+    to: smtpUser,
     subject: name,
     text: message,
   }
