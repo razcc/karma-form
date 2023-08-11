@@ -1,6 +1,6 @@
 var express = require("express")
 var app = express()
-
+require("dotenv").config()
 var nodemailer = require("nodemailer")
 var PORT = process.env.PORT || 5000
 
@@ -23,11 +23,11 @@ app.post("/", (req, res) => {
   var message = req.body.message
 
   var transporter = nodemailer.createTransport({
-    host: "smtp-relay.brevo.com",
-    port: 587,
+    host: process.env.SMTP_HOST,
+    port: process.env.SMTP_PORT,
     auth: {
-      user: "rafael.leonardi98@gmail.com",
-      pass: "xsmtpsib-14b88fac59e593c02089ee09625328f201a1a5e03b6708a87b4953d8bbeeb253-Inrg7BUfcFxX2SpK",
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS,
     },
   })
 
