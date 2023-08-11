@@ -48,7 +48,8 @@ app.post("/", (req, res) => {
       console.log("error")
       res.send("error")
     } else {
-      console.log("inviata" + info.response)
+      console.log("Mesaggio Inviato" + info.response)
+      res.send("success")
     }
   })
 })
