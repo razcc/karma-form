@@ -1,13 +1,14 @@
 const contactForm = document.querySelector(".contact-form")
 
+var nameInut = document.getElementById("fname")
+var email = document.getElementById("email")
+var message = document.getElementById("message")
+
 contactForm.addEventListener("submit", (e) => {
   e.preventDefault()
-  var name = document.getElementById("name")
-  var email = document.getElementById("email")
-  var message = document.getElementById("message")
 
   let formData = {
-    name: name.value,
+    names: nameInut.value,
     emailValue: email.value,
     message: message.value,
   }
@@ -21,15 +22,15 @@ contactForm.addEventListener("submit", (e) => {
   xhr.onload = function () {
     console.log(xhr.responseText)
 
-    if (xhr.responseText == "success") {
-      alert("Message Sent")
-      name.value = ""
+    if (xhr.responseText) {
+      alert("Sent")
+      nameInut.value = ""
       email.value = ""
       message.value = ""
     } else {
       alert("something wrong")
     }
   }
-
+  console.log("Sending request...")
   xhr.send(JSON.stringify(formData))
 })

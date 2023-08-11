@@ -1,43 +1,49 @@
-require("dotenv").config()
-const express = require("express")
-const nodemailer = require("nodemailer")
-const app = express()
+var express = require("express")
+var app = express()
 
-const PORT = process.env.PORT || 5000
+var nodemailer = require("nodemailer")
+var PORT = process.env.PORT || 5000
 
+// Middleware
 app.use(express.static("public"))
+
+// json
 app.use(express.json())
 
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/public/form.html")
 })
 
+// ---
+
 app.post("/", (req, res) => {
   console.log(req.body)
+  var name = req.body.names
+  var email = req.body.emailValue
+  var message = req.body.message
 
-  const transporter = nodemailer.createTransport({
-    service: "smtp-relay.brevo.com",
+  var transporter = nodemailer.createTransport({
+    host: "smtp-relay.brevo.com",
     port: 587,
     auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS,
-      subject: "Message from:" + req.body.name,
-      text: req.body.message,
+      user: "rafael.leonardi98@gmail.com",
+      pass: "xsmtpsib-14b88fac59e593c02089ee09625328f201a1a5e03b6708a87b4953d8bbeeb253-Inrg7BUfcFxX2SpK",
     },
   })
 
-  const mailOption = {
-    from: req.body.email,
-    to: process.env.SMTP_USER,
+  var mailOptions = {
+    from: email,
+    to: "rafael.leonardi98@gmail.com",
+    subject: name,
+    text: message,
   }
 
-  transporter.sendMail(mailOption, (error, info) => {
+  transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
       console.log("error")
       res.send("error")
     } else {
-      console.log("Message Sent:" + info.response)
-      req.send("success")
+      console.log("inviata" + info.response)
     }
   })
 })
