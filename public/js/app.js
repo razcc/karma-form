@@ -28,7 +28,7 @@ contactForm.addEventListener("submit", (e) => {
       email.value = ""
       message.value = ""
     } else {
-      alert("something wrong")
+      alert("something went wrong, check all fields")
     }
   }
   console.log("Sending request...")
